@@ -1,0 +1,58 @@
+#! /usr/bin/perl -wT
+use strict;
+use warnings;
+use CGI;
+use File::Basename;
+
+$CGI::POST_MAX = 1024 * 1024 * 300;
+my $safe_filename_characters = "a-zA-Z0-9_.-";
+#my $upload_dir = "/opt/muzyki";
+my $upload_dir = "/tmp/muzyki";
+
+my $query = new CGI;
+my $filename = $query->param("file");
+
+sub htmltextout
+{
+	my $text = $_[0];
+	print $query->header(
+		-type => "text/html",
+		-charset => "utf-8");
+	print "<html>\n<body>\n<p>$text</p>\n</body>\n</html>";
+}
+
+if (!$filename)
+{
+	htmltextout("Plik jest za duży");
+	exit;
+}
+
+my ( $name, $path, $extension ) = fileparse ( $filename, '..*' );
+$filename = $name . $extension;
+$filename =~ tr/ /_/;
+$filename =~ s/[^$safe_filename_characters]//g;
+
+if ( $filename =~ /^([$safe_filename_characters]+)$/ )
+{
+	$filename = $1;
+}
+else
+{
+	htmltextout("Dziwne znaki w nazwie pliku");
+	exit;
+}
+
+my $upload_filehandle = $query->upload("file");
+
+open ( UPLOADFILE, ">$upload_dir/$filename" ) or die "$!";
+binmode UPLOADFILE;
+
+while ( <$upload_filehandle> )
+{
+	print UPLOADFILE;
+}
+
+close UPLOADFILE;
+
+htmltextout("Zaklęcie zapisane w księdze magii jako $filename");
+

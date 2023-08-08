@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<meta charset="utf8" />
+	</head>
+	<body>
+		<h1>Twiara Furdziału</h1>
+		<p>Panel sterowania śmieszną czapką czarodzieja.</p>
+
+		<h2>Wybierz zaklęcie z listy, aby je rzucić</h2>
+		<p><a href="/cgi-bin/list">Lista zaklęć</a></p>
+
+		<h2>Dodaj plik muzyczny z zaklęciem</h2>
+		<form action="/cgi-bin/add" method="post" enctype="multipart/form-data">
+			<input type="file" name="file" id="file" />
+			<input type="submit" />
+		</form>
+
+		<h2>Dodaj tekst zaklęcia, rzucany głosem tego, którego nazwy nie można wymawiać</h2>
+		<form action="/cgi-bin/voice" method="get">
+			<input type="text" name="text" id="text" placeholder="Zdanie do wymówienia" />
+			<input type="submit" />
+		</form>
+	</body>
+</html>

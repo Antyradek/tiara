@@ -1,0 +1,35 @@
+#! /usr/bin/perl -w
+use strict;
+use warnings;
+use CGI;
+
+#my $upload_dir = "/opt/muzyki";
+my $upload_dir = "/tmp/muzyki";
+
+my $query = new CGI;
+
+sub htmltextout
+{
+	my $text = $_[0];
+	print $query->header(
+		-type => "text/html",
+		-charset => "utf-8");
+	print "<html>\n<body>\n<p>$text</p>\n</body>\n</html>";
+}
+
+opendir DIR,$upload_dir;
+my @dir = readdir(DIR);
+close DIR;
+
+print $query->header(
+	-type => "text/html",
+	-charset => "utf-8");
+
+print("<html><body><h1>Lista Zaklęć</h1>");
+foreach(@dir){
+	if ("$_" ne "." and "$_" ne "..")
+	{
+		print("<p><a href=\"play?file=$_\">Rzuć zaklęcie</a> $_</p>");
+	}
+}
+print("<p>Proszę nie mieszać zaklęć ze sobą! Raz rzuconego zaklęcia nic już nie powstrzyma.</p></body></html>");

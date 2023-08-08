@@ -1,0 +1,40 @@
+#! /usr/bin/perl -w
+use strict;
+use warnings;
+use CGI;
+
+my $safe_filename_characters = "a-zA-Z0-9_-";
+#my $upload_dir = "/opt/muzyki";
+my $upload_dir = "/tmp/muzyki";
+
+my $query = new CGI;
+my $speech = $query->param("text");
+my $safespeech = $speech;
+
+sub htmltextout
+{
+	my $text = $_[0];
+	print $query->header(
+		-type => "text/html",
+		-charset => "utf-8");
+	print "<html>\n<body>\n<p>$text</p>\n</body>\n</html>";
+}
+
+$safespeech =~ tr/ /_/;
+$safespeech =~ s/[^$safe_filename_characters]//g;
+my $filename = "";
+if ( $safespeech =~ /^([$safe_filename_characters]+)$/ )
+{
+	$filename = "$1.wav";
+}
+else
+{
+	htmltextout("Dziwne znaki w nazwie pliku");
+	exit;
+}
+
+my $fullfile = "$upload_dir/$filename";
+system("/usr/bin/espeak", "-v", "pl", "-w", "$fullfile", "\"$speech\"");
+
+htmltextout("Rzucanie zaklęcia nagrane jako $filename");
+
