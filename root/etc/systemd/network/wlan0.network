@@ -1,0 +1,13 @@
+[Match]
+Name=wlan0
+
+[Network]
+Address=10.21.37.1/24
+DHCPServer=true
+#IPMasquerade=ipv4
+
+[DHCPServer]
+PoolOffset=68
+PoolSize=50
+EmitDNS=yes
+DNS=10.21.37.1

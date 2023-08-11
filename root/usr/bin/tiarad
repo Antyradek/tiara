@@ -1,0 +1,24 @@
+#! /usr/bin/python
+
+# Dæmon tiary przydziału
+import select
+import os
+import random
+
+GPIOFILE = "/sys/class/gpio/gpio21/value"
+MUSICDIR = "/opt/muzyka"
+
+file = open(GPIOFILE, "r")
+
+while True:
+        select.select([], [], [file.fileno()])
+        file.seek(0)
+        val = file.read()
+        print("Odczyt: " + val)
+        value = int(val)
+        if value:
+                files = os.listdir(MUSICDIR)
+                randomindex = random.randrange(0, len(files))
+                randomfile = files[randomindex]
+                print("Odgrywanie " + randomfile)
+                os.system("/usr/bin/play " + os.path.join(MUSICDIR, randomfile))

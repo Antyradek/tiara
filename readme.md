@@ -19,6 +19,25 @@ W ramach czapki są stworzone:
 - Dæmon działający w tle do odtwarzania
 - Konfiguracja całego systemu
 
-TODO:
+# TODO
 - Opisać konfigurację systemu
 
+# Konfiguracja
+Opis konfiguracji i plików w systemie.
+
+## GPIO
+Używamy pinu 21 jako wejścia.
+Patrząc na RPI 4B portami USB i ethernetowym do dołu:
+- PIN 21 jest ostatnim prawym pinem.
+- Pin 3,3 V jest pierwszym lewym pinem.
+
+Należy je razem połączyć poprzez jakiś fajny opornik i guziczek, aby wykrywał założenie czapki.
+Potem stan GPIO można odczytać za pomocą plików w `/sys` w systemie.
+
+## Dæmony
+Włączyć następujące dæmony:
+- `hostapd`
+- `systemd-networkd`
+- `dnsmasq`
+- `iptables`
+- `httpd`
