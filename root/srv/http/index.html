@@ -11,12 +11,14 @@
 
 		<h2>Dodaj plik muzyczny z zaklęciem</h2>
 		<form action="/cgi-bin/add" method="post" enctype="multipart/form-data">
+			<p>Wyślij tutaj gotowy plik dźwiękowy w jakimś normalnym formacie.</p>
 			<input type="file" name="file" id="file" />
 			<input type="submit" />
 		</form>
 
 		<h2>Dodaj tekst zaklęcia, rzucany głosem tego, którego nazwy nie można wymawiać</h2>
 		<form action="/cgi-bin/voice" method="get">
+			<p>Użyj syntezatora mowy eSpeak do wygenerowania dźwięku. Jest on bardzo prosty, ale działa. Angielskie nazwy zapisuj fonicznie, liczby słownie, jeśli mają być odmienione, jednostki fizyczne zapisuj pełną nazwą itp.</p>
 			<input type="text" name="text" id="text" placeholder="Zdanie do wymówienia" />
 			<input type="submit" />
 		</form>

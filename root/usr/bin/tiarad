@@ -9,16 +9,27 @@ GPIOFILE = "/sys/class/gpio/gpio21/value"
 MUSICDIR = "/opt/muzyka"
 
 file = open(GPIOFILE, "r")
+played = []
 
 while True:
-        select.select([], [], [file.fileno()])
-        file.seek(0)
-        val = file.read()
-        print("Odczyt: " + val)
-        value = int(val)
-        if value:
-                files = os.listdir(MUSICDIR)
-                randomindex = random.randrange(0, len(files))
-                randomfile = files[randomindex]
-                print("Odgrywanie " + randomfile)
-                os.system("/usr/bin/play " + os.path.join(MUSICDIR, randomfile))
+	select.select([], [], [file.fileno()])
+	file.seek(0)
+	val = file.read()
+	print("Odczyt: " + val)
+	value = int(val)
+	if value:
+		files = os.listdir(MUSICDIR)
+		toplay = [x for x in files if x not in played]
+		print("Zostało: " + str(toplay))
+		if not toplay:
+			played = []
+			toplay = files
+			print('Restart listy')
+
+		randomindex = random.randrange(0, len(toplay))
+		randomfile = toplay[randomindex]
+		print("Odgrywanie " + randomfile)
+		os.system("/usr/bin/play " + os.path.join(MUSICDIR, randomfile))
+
+		played.append(randomfile)
+

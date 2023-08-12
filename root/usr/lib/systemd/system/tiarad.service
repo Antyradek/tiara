@@ -1,0 +1,13 @@
+# Moduł Systemd do uruchamiania Tiary w tle
+
+[Unit]
+Description=Dæmon Twiara Furdziału
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/tiarad
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+ 

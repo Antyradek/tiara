@@ -3,8 +3,7 @@ use strict;
 use warnings;
 use CGI;
 
-#my $upload_dir = "/opt/muzyki";
-my $upload_dir = "/tmp/muzyki";
+my $upload_dir = "/opt/muzyka";
 
 my $query = new CGI;
 

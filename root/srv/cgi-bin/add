@@ -6,9 +6,7 @@ use File::Basename;
 
 $CGI::POST_MAX = 1024 * 1024 * 300;
 my $safe_filename_characters = "a-zA-Z0-9_.-";
-#my $upload_dir = "/opt/muzyki";
-my $upload_dir = "/tmp/muzyki";
-
+my $upload_dir = "/opt/muzyka";
 my $query = new CGI;
 my $filename = $query->param("file");
 
